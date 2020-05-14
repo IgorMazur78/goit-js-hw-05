@@ -19,7 +19,7 @@ class Car {
    *  isOn - заведен ли автомобиль, значения true или false. Изначально false
    *  distance - общий киллометраж, изначально 0
    */
-  constructor({ maxSpeed, speed, isOn, distance, price }) {
+  constructor({ maxSpeed, price }) {
     this.maxSpeed = maxSpeed;
     this.speed = 0;
     this.isOn = false;
@@ -67,9 +67,12 @@ class Car {
    * не больше чем значение свойства maxSpeed
    */
   accelerate(value) {
+    // this.speed = this.speed + value ;
+    // this.isOn = this.speed > this.maxSpeed ?
+
     this.speed = this.speed + value;
     if (this.speed > this.maxSpeed) {
-      this.isOn = false;
+      this.speed = this.maxSpeed;
     }
   }
   /*
@@ -77,9 +80,7 @@ class Car {
    * при условии что результирующая скорость не меньше нуля
    */
   decelerate(value) {
-    this.speed > 0 && this.speed > value
-      ? (this.speed = this.speed - value)
-      : (this.isOn = false);
+    this.speed > value ? (this.speed = this.speed - value) : (this.speed = 0);
     // if (this.speed > 0 && this.speed > value) {
     //   this.speed = this.speed - value;
     // } else {
@@ -91,12 +92,9 @@ class Car {
    * но только в том случае если машина заведена!
    */
   drive(hours) {
-    this.isOn === true
-      ? (this.distance = this.distance + hours * this.speed)
-      : (this.distance = 0);
-    // if (this.isOn === true) {
-    //   this.distance = this.distance + hours * this.speed;
-    // }
+    if (this.isOn === true) {
+      this.distance = this.distance + hours * this.speed;
+    }
   }
 }
 const mustang = new Car({ maxSpeed: 200, price: 2000 });
@@ -122,3 +120,4 @@ mustang.price = 4000;
 console.log(mustang.price); // 4000
 
 // +++++++++++++++++++++++++++++++++++++
+// function getSpecs({maxSpeed, speed, isOn, distance, price}) {    console.log(`maxSpeed: ${maxSpeed}, speed: ${speed}, isOn: ${isOn}, distance: ${distance}, price: ${price}`)}
